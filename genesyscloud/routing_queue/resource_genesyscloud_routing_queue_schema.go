@@ -54,6 +54,21 @@ var (
 		},
 	}
 
+	queueMediaBaseSettingsResource = &schema.Resource{
+		Schema: map[string]*schema.Schema{
+			"media_subtype": {
+				Description: "Media subtype, examples are whatsapp, twitter, webmessaging, facebook, sms, instagram & open",
+				Type:        schema.TypeString,
+				Required:    true,
+			},
+			"enable_auto_answer": {
+				Description: "Indicates if auto-answer is enabled for the given media type or subtype (default is false).  Subtype settings take precedence over media type settings.",
+				Type:        schema.TypeBool,
+				Required:    true,
+			},
+		},
+	}
+
 	queueMediaSettingsResource = &schema.Resource{
 		Schema: map[string]*schema.Schema{
 			"alerting_timeout_sec": {
@@ -95,6 +110,12 @@ var (
 				Type:         schema.TypeInt,
 				Required:     true,
 				ValidateFunc: validation.IntAtLeast(1000),
+			},
+			"subtype_settings": {
+				Description: "Media subtype specific settings.",
+				Type:        schema.TypeList,
+				Optional:    true,
+				Elem:        queueMediaBaseSettingsResource,
 			},
 		},
 	}
